@@ -52,7 +52,7 @@
     amazon.aws.route53:
      state: present
      zone: "{{ domain_name }}"
-     record: "{{ roboshop }}-{{ env }}.{{ domain_name }}"  #roboshop-dev.dev88s.online
+     record: 'roboshop-{{ env }}.{{ domain_name }}"  #roboshop-dev.dev88s.online
      type: A 
      ttl: 1
      value: "{{ item.instances[0].public_ip_address }}"
@@ -65,7 +65,7 @@
 
 
     ######### Destroy #########
-    
+
   - name: delete r53 records
     amazon.aws.route53:
      state: absent
