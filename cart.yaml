@@ -42,6 +42,7 @@
     ansible.builtin.file:
      src: /tmp/cart.unarchive
      dest: /app
+     remote_src: yes
   
   - name: install nodejs dependencies
     community.general.npm:
