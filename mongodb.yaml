@@ -24,3 +24,4 @@
      name: mongod
      enabled: yes
      state: started
+     state: restarted
