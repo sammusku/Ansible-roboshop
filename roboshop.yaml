@@ -5,7 +5,7 @@
    sg_id: sg-0e0f9f37ba6f57a67
    ami_id: ami-0220d79f3f480ecf5
    env: dev
-   domain_name: "{{ dev88s.online }}"
+   domain_name: dev88s.online
    instances:
     - mongodb
     - catalogue
