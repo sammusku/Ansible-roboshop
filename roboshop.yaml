@@ -5,6 +5,7 @@
    sg_id: sg-0e0f9f37ba6f57a67
    ami_id: ami-0220d79f3f480ecf5
    env: dev
+   domain_name: "{{ dev88s.online }}"
    instances:
     - mongodb
     - catalogue
@@ -27,7 +28,16 @@
     ansible.builtin.debug:
      msg: "{{ ec2_output }}"
 
-  
+  - name: create R53 records and wait until the changes have been replicated
+    amazon.aws.route53:
+     state: present
+     zone: "{{ domain_name }}"
+     record: "{{ item.item }}-{{ env }}.{{ domain_name }}"  #mongodb-dev.dev88s.online
+     type: A 
+     ttl: 7200
+     value: "{{ item.instances[0].private_ip_address }}"
+     wait: true
+    loop: "{{ ec2_output.results }}"
 
 
 
