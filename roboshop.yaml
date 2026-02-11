@@ -39,5 +39,9 @@
      wait: true
     loop: "{{ ec2_output.results }}"
 
+  - name: print output results
+    ansible.builtin.debug:
+     msg: "{{ ec2_output.results }}"
+
 
 
