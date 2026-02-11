@@ -22,6 +22,8 @@
       Component: "{{ item }}"
       Environment: "{{ env }}"
       Name: "{{ item }}-{{ env }}"
+      wait: false
+      overwrite: true
     loop: "{{  instances }}"
     register: ec2_output
 
@@ -37,7 +39,8 @@
      type: A 
      ttl: 7200
      value: "{{ item.instances[0].private_ip_address }}"
-     wait: true
+     wait: false
+     overwrite: true
     loop: "{{ ec2_output.results }}"
     when: action == "create"
 
@@ -51,19 +54,35 @@
      zone: "{{ domain_name }}"
      record: "{{ roboshop }}-{{ env }}.{{ domain_name }}"  #roboshop-dev.dev88s.online
      type: A 
-     ttl: 7200
+     ttl: 1
      value: "{{ item.instances[0].public_ip_address }}"
-     wait: true
+     wait: false
+     overwrite: true
     loop: "{{ ec2_output.results }}"
     when: 
      - item.item == "frontend"
      - action == "create"
 
+
+    ######### Destroy #########
+    
+  - name: delete r53 records
+    amazon.aws.route53:
+     state: absent
+     zone: "{{ domain_name }}"
+     record: "{{ item }}-{{ env }}.{{ domain_name }}"
+     type: absent
+     ttl: 1
+    loop: "{{ instances }}"
+    when: action == "destroy"
+
   - name: delete ec2 instance
     amazon.aws.ec2_instance:
      state: absent
+     wait: false
      name: "{{ item }}-{{ dev }}"
     loop: "{{ instances }}"
+    when: action == "destroy"
 
 
 
