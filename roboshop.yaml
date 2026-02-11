@@ -11,15 +11,15 @@
   tasks: 
   - name: create ec2-instances
     amazon.aws.ec2_instances:
-    instance_type: "t3.micro"
-    security_group: "{{ sg_id }}"
-    image_id: "{{ ami_id }}"
-    name: "{{ item }} - {{ env }}"
-    tags:
-     Project: roboshop
-     Component: "{{ item }}"
-     Environment: "{{ env }}"
-     Name: "{{ item }} - {{ env }}"
+     instance_type: "t3.micro"
+     security_group: "{{ sg_id }}"
+     image_id: "{{ ami_id }}"
+     name: "{{ item }} - {{ env }}"
+     tags:
+      Project: roboshop
+      Component: "{{ item }}"
+      Environment: "{{ env }}"
+      Name: "{{ item }} - {{ env }}"
     loop: "{{  instances }}"
     register: ec2_output
 
