@@ -16,8 +16,8 @@
       regexp: '127.0.0.1'
       replace: '0.0.0.0'
 
-    - name: allow all remote connections
-      ansible.builtin.replace:
+   - name: allow all remote connections
+     ansible.builtin.replace:
        path: /etc/redis/redis.conf
        regexp: 'protected-mode'
        replace: 'protected-mode no'
