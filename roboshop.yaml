@@ -20,10 +20,10 @@
      Component: "{{ item }}"
      Environment: "{{ env }}"
      Name: "{{ item }} - {{ env }}"
-  loop: "{{  instances }}"
-  register: ec2_output
+    loop: "{{  instances }}"
+    register: ec2_output
 
-  - name: create R53 records
+  - name: print the output of ec2
     ansible.builtin.debug:
      msg: "{{ ec2_output }}"
 
