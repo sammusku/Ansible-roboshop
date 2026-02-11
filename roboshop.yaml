@@ -6,6 +6,7 @@
    ami_id: ami-0220d79f3f480ecf5
    env: dev
    domain_name: dev88s.online
+   action: create
    instances:
     - mongodb
     - catalogue
@@ -38,6 +39,7 @@
      value: "{{ item.instances[0].private_ip_address }}"
      wait: true
     loop: "{{ ec2_output.results }}"
+    when: action == "create"
 
   - name: print output results
     ansible.builtin.debug:
@@ -53,7 +55,16 @@
      value: "{{ item.instances[0].public_ip_address }}"
      wait: true
     loop: "{{ ec2_output.results }}"
-    when: item.item == "frontend"
+    when: 
+     - item.item == "frontend"
+     - action == "create"
+
+  - name: delete ec2 instance
+    amazon.aws.ec2_instance:
+     state: absent
+     name: "{{ item }}-{{ dev }}"
+    loop: "{{ instances }}"
+
 
 
 
