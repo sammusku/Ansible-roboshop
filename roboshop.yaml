@@ -2,7 +2,7 @@
   hosts: all    #so we dont need to use inventory file: -i localhost,
   connection: local
   vars:
-   sg_id: sgr-00ee608be4fefaa18
+   sg_id: sg-0e0f9f37ba6f57a67
    ami_id: ami-0220d79f3f480ecf5
    env: dev
    instances:
