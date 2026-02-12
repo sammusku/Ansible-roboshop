@@ -16,7 +16,10 @@
     ansible.builtin.template:
       src: nginx.conf
       dest: /etc/nginx/nginx.conf
-    notify: restart nginx
+
+  - name: daemon-reload
+    ansible.builtin.systemd_service:
+     daemon_reload: yes
 
   - name: remove old nginx content
     ansible.builtin.file:
@@ -42,14 +45,14 @@
   - name: enable and start nginx
     ansible.builtin.service:
       name: nginx
-      state: start
-      enabled: yes
-  handlers:
-  - name: restart nginx
-    ansible.builtin.service:
-      name: nginx
       state: restarted
-      
+      enabled: yes
+  # handlers:
+  # - name: restart nginx
+  #   ansible.builtin.service:
+  #     name: nginx
+  #     state: restarted
+
   
 
   
