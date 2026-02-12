@@ -1,55 +1,57 @@
 - name: configure frontend server
   hosts: frontend
   become: yes
-  tasks: 
+
+  tasks:
+
   - name: enable nginx 1.24
     ansible.builtin.command: dnf module enable nginx:1.24 -y
+
   - name: install nginx
-    ansible.builtin.dnf: 
-     name: nginx
-     state: present
+    ansible.builtin.dnf:
+      name: nginx
+      state: present
 
   - name: enable and start nginx
     ansible.builtin.service:
-     name: nginx
-     state: started
-     enabled: yes
+      name: nginx
+      state: started
+      enabled: yes
 
-  - name: remove content from file
+  - name: remove old nginx content
     ansible.builtin.file:
-      path: /usr/share/nginx/html/*
+      path: /usr/share/nginx/html
       state: absent
-  
+
   - name: recreate nginx html directory
     ansible.builtin.file:
-     path: /usr/share/nginx/html
-     state: directory
-  
-  - name: Download application
+      path: /usr/share/nginx/html
+      state: directory
+    
+
+  - name: download frontend application
     ansible.builtin.get_url:
-     url: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
-     dest: /tmp/frontend.zip
-  
-  - name: unzip the application
+      url: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+      dest: /tmp/frontend.zip
+
+  - name: unzip application
     ansible.builtin.unarchive:
-     src: /tmp/frontend.zip
-     dest: /usr/share/nginx/html 
-     remote_src: yes
+      src: /tmp/frontend.zip
+      dest: /usr/share/nginx/html
+      remote_src: yes
 
-  - name: copy systemctl  nginx services
+  - name: copy nginx configuration
     ansible.builtin.copy:
-     src: nginx.conf
-     dest: /etc/nginx/nginx.conf
+      src: nginx.conf
+      dest: /etc/nginx/nginx.conf
 
-  - name: daemon-reload
-    ansible.builtin.systemd_service:
-     daemon_reload: yes
-  
+  - name: test nginx configuration
+    ansible.builtin.command: nginx -t
 
-  - name: restart the nginx
+  - name: restart nginx
     ansible.builtin.service:
-     name: nginx
-     state: restarted
+      name: nginx
+      state: restarted
   
    
      
