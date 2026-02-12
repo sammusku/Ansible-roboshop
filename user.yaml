@@ -4,7 +4,7 @@
   tasks:
   - name: disable old nodejs
     ansible.builtin.command: dnf module disable nodejs -y
-    
+
   - name: enable nodejs:20
     ansible.builtin.command: dnf module enable nodejs:20 -y
 
@@ -52,7 +52,7 @@
      path: /app
   
   - name: copy user system services
-    ansible.builtin.copy: 
+    ansible.builtin.template: 
      src: user.service
      dest: /etc/systemd/system/user.service
 
