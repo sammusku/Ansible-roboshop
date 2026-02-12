@@ -13,7 +13,7 @@
      state: present
 
   - name: enable and start rabbitmq-server
-    ansible-dev.dev88s.online:
+    ansible.builtin.service:
      state: restarted
      enabled: yes
   
