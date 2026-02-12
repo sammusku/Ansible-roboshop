@@ -49,7 +49,7 @@
      path: /app
 
   - name: copy systemctl services
-    ansible.builtin.template:
+    ansible.builtin.copy:
      src: catalogue.service
      dest: /etc/systemd/system/catalogue.service
 
