@@ -61,7 +61,7 @@
 
   - name: daemon-reload
     ansible.builtin.systemd_service:
-     state: reload
+     daemon_reload: yes
 
   - name: import shipping data 
     community.mysql.mysql_db:
