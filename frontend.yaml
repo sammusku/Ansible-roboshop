@@ -37,7 +37,7 @@
      remote_src: yes
 
   - name: copy systemctl  nginx services
-    ansible.builtin.template:
+    ansible.builtin.copy:
      src: nginx.conf
      dest: /etc/nginx/nginx.conf
 
