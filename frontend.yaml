@@ -30,6 +30,12 @@
      src: /tmp/frontend.zip
      dest: /usr/share/nginx/html 
      remote_src: yes
+
+  - name: copy systemctl  nginx services
+    ansible.builtin.template:
+     src: nginx.conf
+     dest: /etc/nginx/nginx.conf
+
   - name: restart the nginx
     ansible.builtin.service:
      name: nginx
