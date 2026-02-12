@@ -1,3 +1,7 @@
+
+#ansible-playbook -i localhost, -e '{"instances":["mongodb","catalogue","user","cart","redis","mysql","shipping","rabbitmq","payment","frontend"]}' roboshop.yaml
+#ansible-playbook -i localhost, -e '{"instances":["mongodb","catalogue","user","cart","redis","mysql","shipping","rabbitmq","payment","frontend"]}' -e operation=destroy roboshop.yaml
+
 - name: create aws ec2-instances and route53 records
   hosts: all    #so we dont need to use inventory file: -i localhost,
   connection: local
